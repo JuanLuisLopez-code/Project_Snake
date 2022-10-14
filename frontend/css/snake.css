@@ -1,0 +1,60 @@
+.general {
+    margin: 0px;
+    padding: 0px;
+    display: flex;
+    /* flex-direction: column; */
+    justify-content: center;
+    align-items: center;
+}
+
+#score_saved{
+    float: left;
+    margin: 4em;
+    text-align: center;
+}
+
+canvas {
+    margin-top: 5em;
+    box-shadow: grey 10px 10px 80px;
+    background-color: black;
+    color: red;
+}
+
+
+/* Header */
+header {
+  margin: 0;
+  background-color: #00A52D;
+}
+.section-1 {
+  margin: 0;
+  padding: 20px;
+  overflow: hidden;
+  border-bottom: 2px solid #990000;
+}
+.styling-logo {
+   margin: 0;
+  float: left;
+}
+.styling-logo h2 {
+   margin: 0;
+  margin-left: 150px;
+  color: #fff;
+  font-size: 30px;
+}
+.styling-link {
+  float: right;
+  margin-top: 10px;
+  margin-right: 150px;
+}
+.styling-link a {
+  color: #fff;
+  text-decoration: none;
+  margin: 5px 20px;
+  font-size: 20px;
+}
+.styling-link a:hover {
+  border-bottom: 2px solid #000;
+  -webkit-transition: all ease 0.75s;
+  -moz-transition: all ease 0.75s;
+}

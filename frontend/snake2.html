@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Snake</title>
+    <script src="./js/controller_header.js"></script>
+    <link rel="stylesheet" href="./css/snake.css">
+</head>
+
+<body>
+    <header>
+        <div class="section-1">
+            <div class="styling-logo">
+                <h2>Choose colors!</h2>
+            </div>
+            <div class="styling-link">
+                <button onclick="log_out()">Log Out</button>
+            </div>
+            <div class="styling-link">
+                <select name="" id="select_game" onchange="select_game()">
+                    <option selected disabled hidden value="">Gamemode</option>
+                    <option value="1">Difficulty 1</option>
+                    <option value="2">Difficulty 2</option>
+                    <option value="3">Difficulty 3</option>
+                </select>
+                <select name="" id="select_head" onchange="select_head()">
+                    <option selected disabled hidden value="">Head Snake Color</option>
+                    <option value="blue" style="background-color: blue;">Blue</option>
+                    <option value="purple" style="background-color: purple;">Purple</option>
+                    <option value="red" style="background-color: red;">red</option>
+                </select>
+                <select name="" id="select_tail" onchange="select_tail()">
+                    <option selected disabled hidden value="">Tail Snake Color</option>
+                    <option value="green" style="background-color: green;">Green</option>
+                    <option value="yellow" style="background-color: yellow;">Yellow</option>
+                    <option value="orange" style="background-color: orange;">Orange</option>
+                </select>
+            </div>
+    </header>
+    <div class="general">
+        <div id="score_saved">
+            <h4>Put ur name</h4>
+            <p>Id close navegator lose score table</p>
+            <input type="text" class="name">
+            <button type="submit" onclick="Submit()">Send name</button>
+            <button onclick="restart()">Play</button>
+        </div>
+        <div>
+            <canvas id="canvas_snake" width="400" height="400" />
+            <script src="./js/snake2.js"></script>
+        </div>
+    </div>
+</body>
+</html>
