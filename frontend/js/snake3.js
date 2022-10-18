@@ -23,9 +23,7 @@ function drawGame() {
         resetSnakeSkin();
         drawSnake();
         drawApple();
-        drawWall();
         changeSnakePosition();
-        drawWall_sticky();
         drawScore();
 
 
@@ -61,15 +59,6 @@ function drawGame() {
             startAppleY = Math.floor(Math.random() * tileSize);
             tailLength++;
             score++;
-            if (tailLength == 0) {
-            } else if (tailLength % 5 === 0) {
-                walls.push(new wallPart(Math.floor(Math.random() * tileCount), Math.floor(Math.random() * tileSize)));
-                drawWall();
-            }
-        }
-
-        if (startWallX == headX && startWallY == headY) {
-            gameover = true;
         }
     }
 }
@@ -163,8 +152,6 @@ function drawApple() {
     canvas_2d.fillRect(startAppleX * tileCount, startAppleY * tileCount, tileSize, tileSize)
 }
 
-let startWallX = 10;
-let startWallY = 2;
 //draw wall
 
 class wallPart {
@@ -172,38 +159,6 @@ class wallPart {
         this.x = x;
         this.y = y;
     }
-}
-
-let walls = [];
-
-function drawWall_sticky() {
-    canvas_2d.fillStyle = "pink";
-    canvas_2d.fillRect(startWallX * tileCount, startWallY * tileCount, tileSize, tileSize)
-}
-
-function drawWall() {
-    canvas_2d.fillStyle = "pink";
-    
-    for (let i = 0; i < walls.length; i++) {
-        let part = walls[i]
-        if (startAppleX == part.x && startAppleY == part.y) {
-            startAppleX = Math.floor(Math.random() * tileCount);
-            startAppleY = Math.floor(Math.random() * tileSize);
-        }
-        if (headX == part.x && headY == part.y) {
-            gameover = true;
-        }
-        for (let i = 0; i < snakeParts.length; i++) {
-            let part_snake = snakeParts[i]
-            if (part.x == part_snake.x && part.y == part_snake.y) {
-                walls.pop();
-                walls.push(new wallPart(Math.floor(Math.random() * tileCount), Math.floor(Math.random() * tileSize)));
-            }
-            canvas_2d.fillRect(part.x * tileCount, part.y * tileCount, tileSize, tileSize);
-        }
-        canvas_2d.fillRect(part.x * tileCount, part.y * tileCount, tileSize, tileSize);
-    }
-
 }
 
 //Draw score
