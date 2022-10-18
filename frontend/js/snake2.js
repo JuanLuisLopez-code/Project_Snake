@@ -8,12 +8,14 @@ const snakeParts = [];
 let tailLength = 0;
 let gameover = Boolean;
 let score = 0;
+let count = 0;
 
 //function control game
 function drawGame() {
     document.getElementById('score_saved').style.display = 'none';
     // hide_show.
     if (gameover == true) {
+        canvas_2d.fillStyle = "red"
         canvas_2d.font = "50px Georgia";
         canvas_2d.fillText("Game over", 90, 200)
         document.getElementById('score_saved').style.display = '';
@@ -21,8 +23,13 @@ function drawGame() {
         resetSnakeSkin();
         drawSnake();
         drawApple();
+        drawWall();
         changeSnakePosition();
+        drawWall_sticky();
         drawScore();
+
+
+
         if (tailLength >= 4) {
             for (let j = 0; j < snakeParts.length; j++) {
                 if (snakeParts[j].x == headX && snakeParts[j].y == headY) {
@@ -54,6 +61,15 @@ function drawGame() {
             startAppleY = Math.floor(Math.random() * tileSize);
             tailLength++;
             score++;
+            if (tailLength == 0) {
+            } else if (tailLength % 5 === 0) {
+                walls.push(new wallPart(Math.floor(Math.random() * tileCount), Math.floor(Math.random() * tileSize)));
+                drawWall();
+            }
+        }
+
+        if (startWallX == headX && startWallY == headY) {
+            gameover = true;
         }
     }
 }
@@ -83,7 +99,14 @@ function drawSnake() {
     canvas_2d.fillStyle = localStorage.getItem("tail") || "green";
     for (let i = 0; i < snakeParts.length; i++) {
         let part = snakeParts[i]
-        canvas_2d.fillRect(part.x * tileCount, part.y * tileCount, tileSize, tileSize)
+        if (startAppleX == part.x && startAppleY == part.y) {
+            startAppleX = Math.floor(Math.random() * tileCount);
+            startAppleY = Math.floor(Math.random() * tileSize);
+            tailLength++;
+            score++;
+            console.log("Tocado")
+        }
+        canvas_2d.fillRect(part.x * tileCount, part.y * tileCount, tileSize, tileSize);
     }
     //Add a new tail on array
     snakeParts.push(new snakePart(headX, headY));
@@ -140,6 +163,38 @@ function drawApple() {
     canvas_2d.fillStyle = "red";
     canvas_2d.fillRect(startAppleX * tileCount, startAppleY * tileCount, tileSize, tileSize)
 }
+
+let startWallX = 10;
+let startWallY = 2;
+//draw wall
+
+class wallPart {
+    constructor(x, y) {
+        this.x = x;
+        this.y = y;
+    }
+}
+
+let walls = [];
+
+function drawWall_sticky() {
+    canvas_2d.fillStyle = "pink";
+    canvas_2d.fillRect(startWallX * tileCount, startWallY * tileCount, tileSize, tileSize)
+}
+
+function drawWall() {
+    canvas_2d.fillStyle = "pink";
+    
+    for (let i = 0; i < walls.length; i++) {
+        let part = walls[i]
+        if (headX == part.x && headY == part.y) {
+            gameover = true;
+        }
+        canvas_2d.fillRect(part.x * tileCount, part.y * tileCount, tileSize, tileSize);
+    }
+
+}
+
 //Draw score
 function drawScore() {
     canvas_2d.fillStyle = "white"

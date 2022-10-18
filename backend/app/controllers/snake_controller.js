@@ -11,7 +11,6 @@ async function getall_users(req, res) {
 
 async function log_user(req, res) {
     try {
-        console.log(db_users)
         const users = db_users.find(user =>{
             return user.username == JSON.parse(req.params.name) && user.password == JSON.parse(req.params.password)
         });
