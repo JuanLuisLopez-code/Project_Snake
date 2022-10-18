@@ -62,7 +62,7 @@ function drawGame() {
             tailLength++;
             score++;
             if (tailLength == 0) {
-            } else if (tailLength % 5 === 0) {
+            } else if (tailLength % 1 === 0) {
                 walls.push(new wallPart(Math.floor(Math.random() * tileCount), Math.floor(Math.random() * tileSize)));
                 drawWall();
             }
@@ -187,6 +187,11 @@ function drawWall() {
     
     for (let i = 0; i < walls.length; i++) {
         let part = walls[i]
+        if (startAppleX == part.x && startAppleY == part.y) {
+            console.log("Muro tocado")
+            startAppleX = Math.floor(Math.random() * tileCount);
+            startAppleY = Math.floor(Math.random() * tileSize);
+        }
         if (headX == part.x && headY == part.y) {
             gameover = true;
         }
