@@ -104,7 +104,6 @@ function drawSnake() {
             startAppleY = Math.floor(Math.random() * tileSize);
             tailLength++;
             score++;
-            console.log("Tocado")
         }
         canvas_2d.fillRect(part.x * tileCount, part.y * tileCount, tileSize, tileSize);
     }
@@ -188,12 +187,19 @@ function drawWall() {
     for (let i = 0; i < walls.length; i++) {
         let part = walls[i]
         if (startAppleX == part.x && startAppleY == part.y) {
-            console.log("Muro tocado")
             startAppleX = Math.floor(Math.random() * tileCount);
             startAppleY = Math.floor(Math.random() * tileSize);
         }
         if (headX == part.x && headY == part.y) {
             gameover = true;
+        }
+        for (let i = 0; i < snakeParts.length; i++) {
+            let part_snake = snakeParts[i]
+            if (part.x == part_snake.x && part.y == part_snake.y) {
+                walls.pop();
+                walls.push(new wallPart(Math.floor(Math.random() * tileCount), Math.floor(Math.random() * tileSize)));
+            }
+            canvas_2d.fillRect(part.x * tileCount, part.y * tileCount, tileSize, tileSize);
         }
         canvas_2d.fillRect(part.x * tileCount, part.y * tileCount, tileSize, tileSize);
     }
