@@ -5,10 +5,6 @@ const log_out = () => {
     window.location.href = './index.html';
 }
 
-localStorage.setItem("game", 1);
-
-
-
 const select_game = () => {
     localStorage.setItem('game', document.getElementById('select_game').value);
     if (localStorage.getItem("game") == 1) {

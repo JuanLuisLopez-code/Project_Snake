@@ -8,7 +8,6 @@ const snakeParts = [];
 let tailLength = 0;
 let gameover = Boolean;
 let score = 0;
-let count = 0;
 
 //function control game
 function drawGame() {
@@ -25,9 +24,8 @@ function drawGame() {
         drawApple();
         changeSnakePosition();
         drawScore();
-
-
-
+        drawDelete();
+        drawRandom();
         if (tailLength >= 4) {
             for (let j = 0; j < snakeParts.length; j++) {
                 if (snakeParts[j].x == headX && snakeParts[j].y == headY) {
@@ -59,6 +57,56 @@ function drawGame() {
             startAppleY = Math.floor(Math.random() * tileSize);
             tailLength++;
             score++;
+        }
+
+        if (startAppleX == startDeleteX && startAppleY == startDeleteY) {
+            startDeleteX = Math.floor(Math.random() * tileCount);
+            startDeleteY = Math.floor(Math.random() * tileSize);
+        } else if (startAppleX == startRandomX && startAppleY == startRandomY) {
+            startRandomX = Math.floor(Math.random() * tileCount);
+            startRandomY = Math.floor(Math.random() * tileSize);
+        }
+
+        if (startDeleteX == headX && startDeleteY == headY) {
+            startDeleteX = Math.floor(Math.random() * tileCount);
+            startDeleteY = Math.floor(Math.random() * tileCount);
+        }
+
+        if (startRandomX == headX && startRandomY == headY) {
+            startRandomX = Math.floor(Math.random() * tileCount);
+            startRandomY = Math.floor(Math.random() * tileSize);
+        }
+
+        if (startDeleteX == startRandomX && startDeleteY == startRandomY) {
+            console.log("same")
+            console.log("same")
+            console.log("same")
+            console.log("same")
+            console.log("same")
+            console.log("same")
+            console.log("same")
+            console.log("same")
+            console.log("same")
+            console.log("same")
+            console.log("same")
+            console.log("same")
+            console.log("same")
+            console.log("same")
+            console.log("same")
+            console.log("same")
+            console.log("same")
+            console.log("same")
+            console.log("same")
+            console.log("same")
+            console.log("same")
+            console.log("same")
+            console.log("same")
+            console.log("same")
+            console.log("same")
+            console.log("same")
+
+            // startRandomX = Math.floor(Math.random() * tileCount);
+            // startRandomY = Math.floor(Math.random() * tileSize);
         }
     }
 }
@@ -152,13 +200,23 @@ function drawApple() {
     canvas_2d.fillRect(startAppleX * tileCount, startAppleY * tileCount, tileSize, tileSize)
 }
 
-//draw wall
+//start the first apple of game
 
-class wallPart {
-    constructor(x, y) {
-        this.x = x;
-        this.y = y;
-    }
+let startDeleteX = Math.floor(Math.random() * tileCount);
+let startDeleteY = Math.floor(Math.random() * tileCount);
+//draw delete_tail
+function drawDelete() {
+    canvas_2d.fillStyle = "brown";
+    canvas_2d.fillRect(startDeleteX * tileCount, startDeleteY * tileCount, tileSize, tileSize)
+}
+
+//start the first apple of game
+let startRandomX = Math.floor(Math.random() * tileCount);
+let startRandomY = Math.floor(Math.random() * tileCount);
+//draw random_move
+function drawRandom() {
+    canvas_2d.fillStyle = "brown";
+    canvas_2d.fillRect(startRandomX * tileCount, startRandomY * tileCount, tileSize, tileSize)
 }
 
 //Draw score
