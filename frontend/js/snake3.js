@@ -8,6 +8,9 @@ const snakeParts = [];
 let tailLength = 0;
 let gameover = Boolean;
 let score = 0;
+let new_moveX = 0;
+let new_moveY = 0;
+localStorage.removeItem('lastMove')
 
 //function control game
 function drawGame() {
@@ -70,43 +73,18 @@ function drawGame() {
         if (startDeleteX == headX && startDeleteY == headY) {
             startDeleteX = Math.floor(Math.random() * tileCount);
             startDeleteY = Math.floor(Math.random() * tileCount);
+            deleteLast();
         }
 
         if (startRandomX == headX && startRandomY == headY) {
             startRandomX = Math.floor(Math.random() * tileCount);
             startRandomY = Math.floor(Math.random() * tileSize);
+            moveRandom();
         }
 
         if (startDeleteX == startRandomX && startDeleteY == startRandomY) {
-            console.log("same")
-            console.log("same")
-            console.log("same")
-            console.log("same")
-            console.log("same")
-            console.log("same")
-            console.log("same")
-            console.log("same")
-            console.log("same")
-            console.log("same")
-            console.log("same")
-            console.log("same")
-            console.log("same")
-            console.log("same")
-            console.log("same")
-            console.log("same")
-            console.log("same")
-            console.log("same")
-            console.log("same")
-            console.log("same")
-            console.log("same")
-            console.log("same")
-            console.log("same")
-            console.log("same")
-            console.log("same")
-            console.log("same")
-
-            // startRandomX = Math.floor(Math.random() * tileCount);
-            // startRandomY = Math.floor(Math.random() * tileSize);
+            startRandomX = Math.floor(Math.random() * tileCount);
+            startRandomY = Math.floor(Math.random() * tileSize);
         }
     }
 }
@@ -144,8 +122,8 @@ function drawSnake() {
         }
         canvas_2d.fillRect(part.x * tileCount, part.y * tileCount, tileSize, tileSize);
     }
-    //Add a new tail on array
     snakeParts.push(new snakePart(headX, headY));
+    //Add a new tail on array
     //If snake move, add 1 tail, but if i use shift this tail is removed on array
     if (snakeParts.length > tailLength) {
         snakeParts.shift();
@@ -166,20 +144,24 @@ document.onkeydown = (pressKey) => {
         if (pressKey.key == "ArrowUp") {
             snakeX = 0;
             snakeY = -1;
+            localStorage.setItem('lastMove', "Up")
         }
         if (pressKey.key == "ArrowDown") {
             snakeX = 0;
             snakeY = 1;
+            localStorage.setItem('lastMove', "Down")
         }
     }
     if (snakeX == 0) {
         if (pressKey.key == "ArrowLeft") {
             snakeX = -1;
             snakeY = 0;
+            localStorage.setItem('lastMove', "Left")
         }
         if (pressKey.key == "ArrowRight") {
             snakeX = 1;
             snakeY = 0;
+            localStorage.setItem('lastMove', "Right")
         }
     }
 };
@@ -210,6 +192,14 @@ function drawDelete() {
     canvas_2d.fillRect(startDeleteX * tileCount, startDeleteY * tileCount, tileSize, tileSize)
 }
 
+function deleteLast() {
+    tailLength --;
+    if(tailLength < 0){
+        tailLength = 0;
+    }
+    snakeParts.pop()
+}
+
 //start the first apple of game
 let startRandomX = Math.floor(Math.random() * tileCount);
 let startRandomY = Math.floor(Math.random() * tileCount);
@@ -217,6 +207,25 @@ let startRandomY = Math.floor(Math.random() * tileCount);
 function drawRandom() {
     canvas_2d.fillStyle = "brown";
     canvas_2d.fillRect(startRandomX * tileCount, startRandomY * tileCount, tileSize, tileSize)
+}
+
+function moveRandom() {
+    if (localStorage.getItem('lastMove')) {
+        new_moveX = Math.floor(Math.random() * 2)
+        new_moveY = Math.floor(Math.random() * 2)
+        if (new_moveX == 0) {
+            new_moveX = -1
+        }
+        if (new_moveY == 0) {
+            new_moveY = -1
+        }
+        for (let i = 0; i < 3; i++) {
+            headX = headX - new_moveX;
+        }
+        for (let j = 0; j < 3; j++) {
+            headY = headY - new_moveY;
+        }
+    }
 }
 
 //Draw score
