@@ -29,6 +29,7 @@ function drawGame() {
         drawScore();
         drawDelete();
         drawRandom();
+
         if (tailLength >= 4) {
             for (let j = 0; j < snakeParts.length; j++) {
                 if (snakeParts[j].x == headX && snakeParts[j].y == headY) {
@@ -73,10 +74,14 @@ function drawGame() {
         if (startDeleteX == headX && startDeleteY == headY) {
             startDeleteX = Math.floor(Math.random() * tileCount);
             startDeleteY = Math.floor(Math.random() * tileCount);
+            startRandomX = Math.floor(Math.random() * tileCount);
+            startRandomY = Math.floor(Math.random() * tileSize);
             deleteLast();
         }
 
         if (startRandomX == headX && startRandomY == headY) {
+            startDeleteX = Math.floor(Math.random() * tileCount);
+            startDeleteY = Math.floor(Math.random() * tileCount);
             startRandomX = Math.floor(Math.random() * tileCount);
             startRandomY = Math.floor(Math.random() * tileSize);
             moveRandom();
