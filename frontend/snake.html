@@ -18,6 +18,7 @@
             </div>
             <div class="styling-link">
                 <button onclick="log_out()">Log Out</button>
+                <button onclick="leaderboard()">Leaderboard</button>
             </div>
             <div class="styling-link">
                 <select name="" id="select_game" onchange="select_game()">
@@ -42,11 +43,8 @@
     </header>
     <div class="general">
         <div id="score_saved">
-            <h4>Put ur name</h4>
-            <p>Id close navegator lose score table</p>
-            <input type="text" class="name">
-            <button type="submit" onclick="Submit()">Send name</button>
-            <button onclick="restart()">Play</button>
+            <button onclick="save()">Save</button>
+            <button onclick="restart()">Play again</button>
         </div>
         <div>
             <canvas id="canvas_snake" width="400" height="400" />

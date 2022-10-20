@@ -1,4 +1,7 @@
 'use strict';
+if(localStorage.getItem("user_loged")==null){
+    window.location.href = './index.html';
+}
 //canvas
 const canvas = document.getElementById('canvas_snake');
 const canvas_2d = canvas.getContext('2d');
@@ -23,6 +26,9 @@ function drawGame() {
         drawApple();
         changeSnakePosition();
         drawScore();
+        if (score) {
+            localStorage.setItem('score_1', score)
+        }
         if (tailLength >= 4) {
             for (let j = 0; j < snakeParts.length; j++) {
                 if (snakeParts[j].x == headX && snakeParts[j].y == headY) {
@@ -156,36 +162,32 @@ function drawScore() {
     canvas_2d.fillText("Score: " + score, canvas.clientWidth - 60, 20);
 }
 
-//function for score, and add a new score in a session
-let show_table_score = "";
-let show_table = [];
-let cadena = "";
-
-//Score only can use in this session if close navigator or delete coockies then the score reset
-
-//Add a new score in a session
-function Submit() {
-    //check if localStorage exist,if not create for dont crash the game
-    if (!localStorage.getItem("score")) {
-        localStorage.setItem("score", JSON.stringify([]))
-    }
-    show_table = JSON.parse(localStorage.getItem("score"));
-    show_table.push([{ "Name": document.getElementsByClassName('name')[0].value, "score": score }])
-    localStorage.setItem("score", JSON.stringify(show_table));
-
-    const inside_div = document.querySelector("#score_saved");
-    const p_show = document.createElement('p');
-    inside_div.appendChild(p_show);
-
-    //Add the new score on localStorage
-    for (let k = 0; k < show_table.length; k++) {
-        cadena = cadena + "<p>" + "Name:  " + show_table[k][0].Name + "Score: " + show_table[k][0].score + "</p>";
-    }
-    p_show.innerHTML = cadena;
-}
-
 function restart() {
     window.location.reload()
 }
 
+async function save(){
+    let user = localStorage.getItem('user_loged')
+    let score_1 = localStorage.getItem('score_1');
+    if(localStorage.getItem('score_1')){
+        const put_score = await fetch("http://localhost:3001/api/snake/",{
+        method: 'PUT',
+        body: JSON.stringify({
+            user, score_1
+        }),
+        headers:{
+            'Content-type': 'application/json; charset=UTF-8'
+        }
+    })
+    const put_score_json = await put_score.json();
+    console.log(put_score_json)
+    }else{
+        score_1 = 0;
+    }
+}
+
 drawGame();
+
+function leaderboard() {
+    window.location.href = './score/score.html';
+}
