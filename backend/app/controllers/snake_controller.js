@@ -1,9 +1,10 @@
 const FormatError = require('../utils/responseApi.js').FormatError;
-const db_users = require('../config/config_db')
+// const db_users = require('../config/config_db')
+
 
 async function getall_users(req, res) {
     try {
-        res.json(db_users);
+        res.json(global.users);
     } catch (error) {
         res.status(500).json(FormatError("An error has ocurred", res.statusCode));
     }//end trycath
@@ -11,7 +12,7 @@ async function getall_users(req, res) {
 
 async function log_user(req, res) {
     try {
-        const users = db_users.find(user => {
+        const users = global.users.find(user => {
             return user.username == JSON.parse(req.params.name) && user.password == JSON.parse(req.params.password)
         });
         res.json(users);
@@ -26,12 +27,11 @@ async function register_user(req, res) {
         if (!req.body.input_username) {
             res.status(500).json(FormatError("An error has ocurred", res.statusCode));
         } else {
-            const confirm_user = db_users.find(user => {
+            const confirm_user = global.users.find(user => {
                 return user.username == req.body.input_username && user.password == req.body.input_password
-                    && user.score_1 == 0 && user.score_2 == 0 && user.score_3 == 0
             });
             if (confirm_user == null) {
-                db_users.push({ username: req.body.input_username, password: req.body.input_password });
+                global.users.push({ username: req.body.input_username, password: req.body.input_password, score_1: 0, score_2: 0, score_3: 0 });
                 res.json("Registered");
 
             } else {
@@ -46,18 +46,18 @@ async function register_user(req, res) {
 async function change_score(req, res) {
     let msg = "success";
     try {
-        const confirm_user = db_users.findIndex(user => {
+        const confirm_user = global.users.findIndex(user => {
             return user.username == JSON.parse(req.body.user)
         });
         if (confirm_user !== -1) {
-            if(req.body.score_1){
-                db_users[confirm_user].score_1 = req.body.score_1;
+            if (req.body.score_1) {
+                global.users[confirm_user].score_1 = req.body.score_1;
                 res.json(msg);
-            }else if(req.body.score_2){
-                db_users[confirm_user].score_2 = req.body.score_2;
+            } else if (req.body.score_2) {
+                global.users[confirm_user].score_2 = req.body.score_2;
                 res.json(msg);
-            }else if(req.body.score_3){
-                db_users[confirm_user].score_3 = req.body.score_3;
+            } else if (req.body.score_3) {
+                global.users[confirm_user].score_3 = req.body.score_3;
                 res.json(msg);
             }
         }
